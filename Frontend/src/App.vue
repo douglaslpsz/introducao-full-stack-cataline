@@ -1,5 +1,18 @@
 <template>
-  <h1>Olá</h1>
+  <div class="users">
+    <div class="container">
+      <section>
+        <h5 class="title">Lista de usuários</h5>
+        <ul>
+          <li v-for="(user, index) in users" :key="index">
+            <p>{{ user.name }}</p>
+            <small> {{ user.email }} </small>
+            <a class="destroy"></a>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -10,6 +23,7 @@ import axios from '@/utils/axios';
 export default defineComponent({
   data() {
     return {
+      users: []
     }
   },
   components: {
@@ -17,12 +31,16 @@ export default defineComponent({
   },
   methods: {
     async fetchUsers() {
-      const response = await axios.get('/users')
-      console.log(response);
+      try{
+        const { data } = await axios.get('/users')
+        this.users = data
+      } catch(error) {
+        console.warn(error)
+      }
     }
   },
-  created() {
-    this.fetchUsers()
+  async created() {
+    await this.fetchUsers();
   }
 
 })
