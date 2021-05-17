@@ -27,12 +27,7 @@
 
 import { defineComponent } from 'vue'
 import axios from '@/utils/axios';
-
-interface User {
-  id: string
-  email: string
-  name: string
-}
+import { User } from '@/types'
 
 export default defineComponent({
   data() {
